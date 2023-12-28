@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "117551501634",
+    "project_id": "tpamov-33308",
+    "storage_bucket": "tpamov-33308.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117551501634:android:b5a7649beb2ca2673bb8db",
+        "android_client_info": {
+          "package_name": "pt.isec.a2015016870.tourmate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAzNj0_bP89G4_H-2PspveGiI7QL7L3w0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:117551501634:android:4bac96d9ce5756663bb8db",
+        "android_client_info": {
+          "package_name": "pt.isec.a2105016870.flutter_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAzNj0_bP89G4_H-2PspveGiI7QL7L3w0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
