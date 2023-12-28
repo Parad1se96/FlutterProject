@@ -7,9 +7,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_options.dart';
 
+void initFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
 
 void main() {
-  print('Ola bom dia até logoo');
+
+  // Ensure that Flutter is initialized before Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  initFirebase();
+
   runApp(const MyApp());
 }
 
