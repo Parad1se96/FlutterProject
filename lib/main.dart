@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_project/second_screen.dart';
+import 'package:flutter_project/list_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       initialRoute: MyHomePage.routeName,//NESTE MODO CRIAMOS AS NOSSAS ROTASSSS
       routes: {
         MyHomePage.routeName : (context) => MyHomePage(title: 'Flutter Demo Home Page'),
-        SecondScreen.routeName: (context) => SecondScreen(),
+        ListScreen.routeName: (context) => ListScreen(),
       },
     );
   }
@@ -147,16 +147,16 @@ class _MyHomePageState extends State<MyHomePage> {
               _resetCounter();
             }, child: const Text('Reset')),
             Hero(
-              tag: 'secondscreen',
+              tag: 'listscreen',
               child: ElevatedButton(
                   onPressed: () async {
-                   var obj = await Navigator.pushNamed(context, SecondScreen.routeName, arguments: _counter);
+                   var obj = await Navigator.pushNamed(context, ListScreen.routeName, arguments: _counter);
 
                   // res.then((value) => { setState(() {})});
                     int i = obj is int ? obj : 1234;//O significado do 1234 é caso falha a devolver o valor, é este o valor default
                     setState(() {_counter = i;});
                   },
-                  child: const Text('Second Screen')),
+                  child: const Text('List Screen')),
             ),
           ],
         ),
