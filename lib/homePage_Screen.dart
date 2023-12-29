@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project/categories_Screen.dart';
+import 'package:flutter_project/lastPoints_Screen.dart';
 
 import 'locations_Screen.dart';
 
@@ -87,7 +88,7 @@ Widget build(BuildContext context) {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () {
-                  // Ação quando o botão é pressionado
+                  Navigator.pushNamed(context, FavouriteScreen.routeName);
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),

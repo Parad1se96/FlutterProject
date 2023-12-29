@@ -5,12 +5,12 @@ import 'package:flutter_project/categories_Screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_project/pointLocal_Screen.dart';
+import 'package:flutter_project/point_Screen.dart';
 import 'package:flutter_project/pointsCategories_Screen.dart';
 import 'package:flutter_project/pointsLocations_Screen.dart';
-import 'package:flutter_project/pointCat_Screen.dart';
 import 'firebase_options.dart';
 import 'homePage_Screen.dart';
+import 'lastPoints_Screen.dart';
 import 'locations_Screen.dart';
 
 void initFirebase() async {
@@ -48,9 +48,8 @@ class MyApp extends StatelessWidget {
         LocationsScreen.routeName: (context) => const LocationsScreen(),
         PointsCategoriesScreen.routeName: (context) =>  PointsCategoriesScreen(),
         PointsLocationsScreen.routeName: (context) =>  PointsLocationsScreen(),
-        PointCatScreen.routeName: (context) =>  const PointCatScreen(categoryName: '', pointName: '',),
-        PointLocalScreen.routeName: (context) =>  const PointLocalScreen(categoryName: '', pointName: '',),
-        //FavoritesScreen.routeName: (context) => const FavoritesScreen(),
+        PointScreen.routeName: (context) =>  const PointScreen(filter: '',categoryName: '', pointName: '',),
+        FavouriteScreen.routeName: (context) => FavouriteScreen(),
         //CreditsScreen.routeName: (context) => const CreditsScreen(),
       },
     );

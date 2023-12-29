@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_project/pointCat_Screen.dart';
-import 'package:flutter_project/pointLocal_Screen.dart';
+import 'package:flutter_project/point_Screen.dart';
 
 class PointsLocationsScreen extends StatefulWidget {
   static const String routeName = '/PointsLocations_Screen';
@@ -60,7 +59,8 @@ class _PointsLocationsScreenState extends State<PointsLocationsScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => PointLocalScreen(
+                                  builder: (context) => PointScreen(
+                                    filter: "Locais",
                                     categoryName: locationName,
                                     pointName: pointName,
                                   ),

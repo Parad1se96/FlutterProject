@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_project/pointCat_Screen.dart';
+import 'package:flutter_project/point_Screen.dart';
 
 class PointsCategoriesScreen extends StatefulWidget {
   static const String routeName = '/PointsCategories_Screen';
@@ -59,7 +59,8 @@ class _PointsCategoriesScreenState extends State<PointsCategoriesScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => PointCatScreen(
+                                  builder: (context) => PointScreen(
+                                    filter: 'Categorias',
                                     categoryName: categoryName,
                                     pointName: pointName,
                                   ),
