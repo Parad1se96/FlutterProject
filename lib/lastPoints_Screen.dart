@@ -34,7 +34,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Favourite Points'),
+        title: Text('Recent Points'),
         backgroundColor: Colors.amber,
       ),
       body: viewedPoints.isEmpty

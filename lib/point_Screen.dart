@@ -22,8 +22,8 @@ class _PointScreenState extends State<PointScreen> {
   late String pointName;
   late String categoryName;
   late String filter;
-  late String liked;
-
+  late String liked = "null";
+  String? _error;
   @override
   void initState() {
     super.initState();
@@ -47,17 +47,14 @@ class _PointScreenState extends State<PointScreen> {
     };
 
     viewedPointsStrings.forEach((element) {
-
       Map<String, dynamic> pointInfo = json.decode(element);
       String pointNameList = pointInfo['pointName'];
-
 
       if(pointNameList == pointName) {
         liked = pointInfo['like'];
         flag = true;
       }
     });
-
 
       // Adicione o mapa à lista após codificar como JSON
       viewedPointsStrings.add(json.encode(pointInfo));
@@ -86,12 +83,32 @@ class _PointScreenState extends State<PointScreen> {
         print(pointInfo['like']);
       }
     }
-
-    print(viewedPointsStrings);
     // Salve a lista atualizada
     await prefs.setStringList('viewedPoints', viewedPointsStrings);
   }
+  Future<void> _insertDataBase(bool? like, Map<String, dynamic> pointData) async {
 
+    var db = FirebaseFirestore.instance;
+    var document = db.collection(filter).doc(categoryName).collection('points').doc(pointName);
+    var data = await document.get(const GetOptions(source: Source.server));
+
+    if (data.exists) {
+        if (like == true) {
+          print('EI');
+            var avaliacao = data['pontuacao'] + 1;
+            document.update({'pontuacao': avaliacao}).then(
+                    (res) => setState(() { _error = null; }),
+                onError: (e) => setState(() { _error = e.toString();}));
+        }else{
+          var avaliacao = data['pontuacao'] - 1;
+          document.update({'pontuacao': avaliacao}).then(
+                  (res) => setState(() { _error = null; }),
+              onError: (e) => setState(() { _error = e.toString();}));
+        }
+    }else {
+      setState(() { _error = "Document doesn't exist";});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +141,8 @@ class _PointScreenState extends State<PointScreen> {
           String latitude = pointData['Latitude'] ?? '';
           String longitude = pointData['Longitude'] ?? '';
           String descricaoLocal = pointData['descricaoLocal'] ?? '';
+          var avaliacaoLocal = pointData['pontuacao'] ?? 0;
+
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,10 +185,20 @@ class _PointScreenState extends State<PointScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Text(
+                    avaliacaoLocal.toString(), // Converta para String
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: avaliacaoLocal < 0
+                          ? Colors.red
+                          : (avaliacaoLocal > 0 ? Colors.green : Colors.black),
+                    ),
+                  ),
                   ElevatedButton(
                     onPressed: () {
                       // Lógica para "Gosto"
                       _updatePointer(true);
+                      _insertDataBase(true,pointData);
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
@@ -181,6 +210,7 @@ class _PointScreenState extends State<PointScreen> {
                     onPressed: () {
                       // Lógica para "Não Gosto"
                       _updatePointer(false);
+                      _insertDataBase(false,pointData);
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(

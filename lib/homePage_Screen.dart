@@ -94,19 +94,7 @@ Widget build(BuildContext context) {
                   padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
                 ),
                 child: const Text(
-                  'Favorites',
-                  style: TextStyle(fontSize: 18.0),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Ação quando o botão é pressionado
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-                ),
-                child: const Text(
-                  'Credits',
+                  'Recent Points',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),
