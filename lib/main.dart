@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         LocationsScreen.routeName: (context) => const LocationsScreen(),
         PointsCategoriesScreen.routeName: (context) =>  PointsCategoriesScreen(),
         PointsLocationsScreen.routeName: (context) =>  PointsLocationsScreen(),
-        PointScreen.routeName: (context) =>  const PointScreen(filter: '',categoryName: '', pointName: '',),
+        PointScreen.routeName: (context) =>  const PointScreen(filter: '',categoryName: '', pointName: ''),
         FavouriteScreen.routeName: (context) => FavouriteScreen(),
         //CreditsScreen.routeName: (context) => const CreditsScreen(),
       },

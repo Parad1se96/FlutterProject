@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,6 +22,7 @@ class _PointScreenState extends State<PointScreen> {
   late String pointName;
   late String categoryName;
   late String filter;
+  late String liked;
 
   @override
   void initState() {
@@ -28,28 +30,64 @@ class _PointScreenState extends State<PointScreen> {
     pointName = widget.pointName;
     categoryName = widget.categoryName;
     filter = widget.filter;
-    _incrementPointer();
+    _incrementPointer(null);
   }
 
-  Future<void> _incrementPointer() async {
+  Future<void> _incrementPointer(bool ?like) async {
     var prefs = await SharedPreferences.getInstance();
     List<String> viewedPointsStrings = prefs.getStringList('viewedPoints') ?? [];
+    var flag = false;
 
     // Adicione informações do ponto ao mapa
     Map<String, String> pointInfo = {
       'filter': filter,
       'categoryName': categoryName,
       'pointName': pointName,
+      'like': like.toString(),
     };
 
-    // Adicione o mapa à lista após codificar como JSON
-    viewedPointsStrings.add(json.encode(pointInfo));
+    viewedPointsStrings.forEach((element) {
+
+      Map<String, dynamic> pointInfo = json.decode(element);
+      String pointNameList = pointInfo['pointName'];
+
+
+      if(pointNameList == pointName) {
+        liked = pointInfo['like'];
+        flag = true;
+      }
+    });
+
+
+      // Adicione o mapa à lista após codificar como JSON
+      viewedPointsStrings.add(json.encode(pointInfo));
 
     // Se houver mais de 10 elementos, remova o mais antigo
     if (viewedPointsStrings.length > 10) {
       viewedPointsStrings.removeAt(0);
     }
+    if(!flag) {
+      // Salve a lista atualizada
+      await prefs.setStringList('viewedPoints', viewedPointsStrings);
+    }
+  }
 
+
+  Future<void> _updatePointer(bool? like) async {
+    var prefs = await SharedPreferences.getInstance();
+    List<String> viewedPointsStrings = prefs.getStringList('viewedPoints') ?? [];
+
+    for (int i = 0; i < viewedPointsStrings.length; i++) {
+      Map<String, dynamic> pointInfo = json.decode(viewedPointsStrings[i]);
+
+      if (pointInfo['pointName'] == pointName) {
+        pointInfo['like'] = like.toString();
+        viewedPointsStrings[i] = json.encode(pointInfo); // Atualize o elemento na lista original
+        print(pointInfo['like']);
+      }
+    }
+
+    print(viewedPointsStrings);
     // Salve a lista atualizada
     await prefs.setStringList('viewedPoints', viewedPointsStrings);
   }
@@ -90,16 +128,15 @@ class _PointScreenState extends State<PointScreen> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if(filter == 'Locais')
-                Text(
-                  'Location: $categoryName',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
-              if(filter == 'Categorias')
-                Text(
-                  'Category: $categoryName',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
+              // Informações existentes do ponto
+              Text(
+                'Location: $categoryName',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                'Category: $categoryName',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
               SizedBox(height: 8.0),
               Text(
                 'Point: $pointName',
@@ -124,6 +161,35 @@ class _PointScreenState extends State<PointScreen> {
                 style: TextStyle(fontSize: 14.0),
               ),
               SizedBox(height: 16.0),
+
+              // Botões Gosto e Não Gosto
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Lógica para "Gosto"
+                      _updatePointer(true);
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: liked == "true" ? Colors.green : null, // Cor verde quando liked é true
+                    ),
+                    child: Text('Gosto'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Lógica para "Não Gosto"
+                      _updatePointer(false);
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: liked == "false" ? Colors.red : null, // Cor vermelha quando liked é false
+                    ),
+                    child: Text('Não Gosto'),
+                  ),
+                ],
+              ),
             ],
           );
         },

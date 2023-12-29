@@ -27,7 +27,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         Map<String, dynamic> decodedItem = json.decode(item);
         return decodedItem.map((key, value) => MapEntry(key, value.toString()));
       }).toList();
-      print(viewedPoints);
     });
   }
 
