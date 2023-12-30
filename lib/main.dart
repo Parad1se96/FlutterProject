@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'), JÁ N VAMOS USAR A HOME E VAMOS POR ROTAS !
-      initialRoute: MyHomePage.routeName,//NESTE MODO CRIAMOS AS NOSSAS ROTASSSS
+
+      initialRoute: MyHomePage.routeName,
       routes: {
         MyHomePage.routeName: (context) => const MyHomePage(title: 'TourMate Flutter'),
         CategoriesScreen.routeName: (context) => const CategoriesScreen(),
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         PointsLocationsScreen.routeName: (context) =>  PointsLocationsScreen(),
         PointScreen.routeName: (context) =>  const PointScreen(filter: '',categoryName: '', pointName: ''),
         FavouriteScreen.routeName: (context) => FavouriteScreen(),
-        //CreditsScreen.routeName: (context) => const CreditsScreen(),
+
       },
     );
   }
